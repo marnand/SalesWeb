@@ -35,8 +35,29 @@ namespace SalesWebMvc.Controllers
 
         #endregion
 
+        #region Details
+
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _sellerService.FindById(id.Value);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
+
+        #endregion
+
         #region Create
-        
+
         public IActionResult Create()
         {
             var departments = _departmentService.FindAll();
