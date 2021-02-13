@@ -11,7 +11,7 @@ namespace SalesWebMvc.Controllers
 {
     public class SellersController : Controller
     {
-        #region Dependências
+        #region Dependencies
 
         private readonly SellerService _sellerService;
         private readonly DepartmentService _departmentService;
@@ -35,7 +35,7 @@ namespace SalesWebMvc.Controllers
 
         #endregion
 
-        #region Criação
+        #region Create
         
         public IActionResult Create()
         {
@@ -54,6 +54,35 @@ namespace SalesWebMvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        #endregion
+
+        #region Delete
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _sellerService.FindById(id.Value);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            _sellerService.Remove(id);
+
+            return RedirectToAction(nameof(Index));
+        }
         #endregion
     }
 }
