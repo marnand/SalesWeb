@@ -11,4 +11,10 @@ namespace SalesWebMvc.Models.Enums
         Billed = 1,
         Canceled = 2
     }
+
+    public enum StatusId : int
+    {
+        Deleted = 0,
+        Active = 1
+    }
 }
