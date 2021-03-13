@@ -49,24 +49,38 @@ namespace SalesWebMvc.Services
 
         public async Task RemoveAsync(int id)
         {
+            //Método para alterar o StatusId para deleted
+            var obj = await _context.Seller.FindAsync(id);
+            obj.StatusId = Models.Enums.StatusId.Deleted;
+
             try
             {
-                var obj = await _context.Seller.FindAsync(id);
-
-                _context.Seller.Remove(obj);
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException e)
+            catch (DbUpdateConcurrencyException e)
             {
-                throw new IntegrityException("Can't delete seller because he/she has sales");
+                throw new DbConcurrencyException(e.Message);
             }
+
+            //Método para deletar do banco
+            //try
+            //{
+            //    var obj = await _context.Seller.FindAsync(id);
+
+            //    _context.Seller.Remove(obj);
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateException)
+            //{
+            //    throw new IntegrityException("Can't delete seller because he/she has sales");
+            //}
         }
 
         #region Methods
 
         public async Task<List<Seller>> FindAllAsync()
         {
-            return await _context.Seller.ToListAsync();
+            return await _context.Seller.Where(x => x.StatusId == Models.Enums.StatusId.Active).ToListAsync();
         }
 
         public async Task<Seller> FindByIdAsync(int id)
