@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\scripts\Functions.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="1" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.App" />

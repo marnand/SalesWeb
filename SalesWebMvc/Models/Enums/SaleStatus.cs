@@ -14,7 +14,7 @@ namespace SalesWebMvc.Models.Enums
 
     public enum StatusId : int
     {
-        Deleted = 0,
-        Active = 1
+        Active = 0,
+        Deleted = 1
     }
 }
